@@ -27,6 +27,9 @@ import (
 
 // A ProviderConfigSpec defines the desired state of a ProviderConfig.
 type ProviderConfigSpec struct {
+	
+	// Base URL of the Dynatrace Service
+	BaseURL string `json:"baseURL,omitempty"`
 	// Credentials required to authenticate to this provider.
 	Credentials ProviderCredentials `json:"credentials"`
 }
@@ -47,7 +50,7 @@ type ProviderConfigStatus struct {
 
 // +kubebuilder:object:root=true
 
-// A ProviderConfig configures a Template provider.
+// A ProviderConfig configures a Git provider.
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="SECRET-NAME",type="string",JSONPath=".spec.credentials.secretRef.name",priority=1

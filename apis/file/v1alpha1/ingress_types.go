@@ -25,62 +25,63 @@ import (
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-// MyTypeParameters are the configurable fields of a MyType.
-type MyTypeParameters struct {
-	ConfigurableField string `json:"configurableField"`
+// IngressParameters are the configurable fields of a Ingress.
+type IngressParameters struct {
+	FileName string `json:"fileName"`
+	
 }
 
-// MyTypeObservation are the observable fields of a MyType.
-type MyTypeObservation struct {
+// IngressObservation are the observable fields of a Ingress.
+type IngressObservation struct {
 	ObservableField string `json:"observableField,omitempty"`
 }
 
-// A MyTypeSpec defines the desired state of a MyType.
-type MyTypeSpec struct {
+// A IngressSpec defines the desired state of a Ingress.
+type IngressSpec struct {
 	xpv1.ResourceSpec `json:",inline"`
-	ForProvider       MyTypeParameters `json:"forProvider"`
+	ForProvider       IngressParameters `json:"forProvider"`
 }
 
-// A MyTypeStatus represents the observed state of a MyType.
-type MyTypeStatus struct {
+// A IngressStatus represents the observed state of a Ingress.
+type IngressStatus struct {
 	xpv1.ResourceStatus `json:",inline"`
-	AtProvider          MyTypeObservation `json:"atProvider,omitempty"`
+	AtProvider          IngressObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// A MyType is an example API type.
+// A Ingress is an example API type.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,template}
-type MyType struct {
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,git}
+type Ingress struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   MyTypeSpec   `json:"spec"`
-	Status MyTypeStatus `json:"status,omitempty"`
+	Spec   IngressSpec   `json:"spec"`
+	Status IngressStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// MyTypeList contains a list of MyType
-type MyTypeList struct {
+// IngressList contains a list of Ingress
+type IngressList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []MyType `json:"items"`
+	Items           []Ingress `json:"items"`
 }
 
-// MyType type metadata.
+// Ingress type metadata.
 var (
-	MyTypeKind             = reflect.TypeOf(MyType{}).Name()
-	MyTypeGroupKind        = schema.GroupKind{Group: Group, Kind: MyTypeKind}.String()
-	MyTypeKindAPIVersion   = MyTypeKind + "." + SchemeGroupVersion.String()
-	MyTypeGroupVersionKind = SchemeGroupVersion.WithKind(MyTypeKind)
+	IngressKind             = reflect.TypeOf(Ingress{}).Name()
+	IngressGroupKind        = schema.GroupKind{Group: Group, Kind: IngressKind}.String()
+	IngressKindAPIVersion   = IngressKind + "." + SchemeGroupVersion.String()
+	IngressGroupVersionKind = SchemeGroupVersion.WithKind(IngressKind)
 )
 
 func init() {
-	SchemeBuilder.Register(&MyType{}, &MyTypeList{})
+	SchemeBuilder.Register(&Ingress{}, &IngressList{})
 }
